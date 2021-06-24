@@ -1,10 +1,9 @@
 import React from "react";
+import { Flex, Heading, Input, Box, Button, Container } from "@chakra-ui/react";
+import { EmailIcon, LockIcon } from "@chakra-ui/icons";
 import * as Realm from "realm-web";
 import { useRealmApp } from "../RealmApp";
 import styled from "@emotion/styled";
-import Button from "@leafygreen-ui/button";
-import TextInput from "@leafygreen-ui/text-input";
-import LGCard from "./Card";
 import { uiColors } from "@leafygreen-ui/palette";
 import validator from "validator";
 import Loading from "./Loading";
@@ -57,18 +56,28 @@ export default function LoginScreen() {
   };
 
   return (
-    <Container>
+    <Container height="100vh" centerContent>
       {isLoggingIn ? (
         <Loading />
       ) : (
-        <Card>
-          <LoginFormRow>
-            <LoginHeading>
+        <Box
+          m="auto"
+          p={3}
+          backgroundColor="whitesmoke"
+          rounded={6}
+          shadow="dark-lg"
+        >
+          <Flex alignItems="center" justifyContent="center">
+            <Heading mb="10px" fontSize="32px" fontFamily="sans-Serif">
               {mode === "login" ? "Log In" : "Register an Account"}
-            </LoginHeading>
-          </LoginFormRow>
-          <LoginFormRow>
-            <TextInput
+            </Heading>
+          </Flex>
+          <Flex direction="row" alignItems="center">
+            <EmailIcon mr={3} color="blackAlpha.900" fontSize="20px" />
+            <Input
+              my={3}
+              mr={3}
+              variant="flushed"
               type="email"
               label="Email"
               placeholder="your.email@example.com"
@@ -86,9 +95,13 @@ export default function LoginScreen() {
               }
               errorMessage={error.email}
             />
-          </LoginFormRow>
-          <LoginFormRow>
-            <TextInput
+          </Flex>
+          <Flex alignItems="center" justifyContent="center">
+            <LockIcon mr={3} color="blackAlpha.900" fontSize="20px" />
+            <Input
+              my={3}
+              mr={3}
+              variant="flushed"
               type="password"
               label="Password"
               placeholder="pa55w0rd"
@@ -101,14 +114,21 @@ export default function LoginScreen() {
               }
               errorMessage={error.password}
             />
-          </LoginFormRow>
+          </Flex>
           {mode === "login" ? (
-            <Button variant="primary" onClick={() => handleLogin()}>
+            <Button
+              colorScheme="whatsapp"
+              width="100%"
+              my={3}
+              onClick={() => handleLogin()}
+            >
               Log In
             </Button>
           ) : (
             <Button
-              variant="primary"
+              colorScheme="whatsapp"
+              width="100%"
+              my={3}
               onClick={() => handleRegistrationAndLogin()}
             >
               Register
@@ -129,7 +149,7 @@ export default function LoginScreen() {
               {mode === "login" ? "Register one now." : "Log in instead."}
             </ToggleLink>
           </ToggleContainer>
-        </Card>
+        </Box>
       )}
     </Container>
   );
@@ -173,9 +193,6 @@ function parseAuthenticationError(err) {
   return { status, message };
 }
 
-const Card = styled(LGCard)`
-  width: 420px;
-`;
 const ToggleContainer = styled.div`
   margin-top: 8px;
   font-size: 12px;
@@ -192,22 +209,4 @@ const ToggleLink = styled.button`
   border: none;
   font-size: 12px;
   color: ${uiColors.green.dark2};
-`;
-
-const Container = styled.div`
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  background: ${uiColors.gray.light2};
-`;
-
-const LoginHeading = styled.h1`
-  margin: 0;
-  font-size: 32px;
-`;
-
-const LoginFormRow = styled.div`
-  margin-bottom: 16px;
 `;

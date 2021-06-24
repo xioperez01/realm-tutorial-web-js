@@ -1,4 +1,5 @@
 import React from "react";
+import { ChakraProvider } from "@chakra-ui/react"
 import LoginScreen from "./components/LoginScreen";
 import TaskApp from "./TaskApp";
 import RealmApolloProvider from "./graphql/RealmApolloProvider";
@@ -14,12 +15,14 @@ const RequireLoggedInUser = ({ children }) => {
 
 export default function App() {
   return (
-    <RealmAppProvider appId={APP_ID}>
+    <ChakraProvider>
+      <RealmAppProvider appId={APP_ID}>
       <RequireLoggedInUser>
         <RealmApolloProvider>
           <TaskApp />
         </RealmApolloProvider>
       </RequireLoggedInUser>
     </RealmAppProvider>
+    </ChakraProvider>
   );
 }
